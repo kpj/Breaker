@@ -19,14 +19,33 @@ function tick() {
 	simulate(world);
 	ctx.clearRect(0, 0, $('#content').width(), $('#content').height());
 	drawWorld(world);
+
+	// move paddle
+	if(move_left) {
+		world.paddle.move(-5);
+	}
+	if(move_right) {
+		world.paddle.move(5);
+	}
 }
 
-$(document).keypress(function(e) {
-	if(e.keyCode == 97) {
+var move_left = false;
+var move_right = false;
+$(document).keydown(function(e) {
+	if(e.keyCode == 65) {
 		// [A]
-		world.paddle.move(-10);
-	} else if(e.keyCode == 100) {
+		move_left = true;
+	} else if(e.keyCode == 68) {
 		// [D]
-		world.paddle.move(10);
+		move_right = true;
+	}
+});
+$(document).keyup(function(e) {
+	if(e.keyCode == 65) {
+		// [A]
+		move_left = false;
+	} else if(e.keyCode == 68) {
+		// [D]
+		move_right = false;
 	}
 });
