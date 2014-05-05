@@ -106,6 +106,11 @@ function simulate(world) {
 	if(res != -1) {
 		switch(res) {
 			case 1:
+				if(
+					(world.ball.vx > 0 && world.ball.x < world.paddle.x + blockWidth/2) ||
+					(world.ball.vx < 0 && world.ball.x > world.paddle.x + blockWidth/2)
+				)
+					world.ball.vx *= -1;
 				world.ball.vy *= -1;
 				break;
 			case 2:
