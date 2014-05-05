@@ -1,0 +1,16 @@
+body {
+	background-color: black;
+}
+
+#content {
+	width: 800px;
+	height: 600px;
+
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#world {
+	width: 100%;
+	height: 100%;
+}
