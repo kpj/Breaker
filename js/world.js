@@ -7,8 +7,8 @@ var Ball = function() {
 	this.x = 400;
 	this.y = 80;
 
-	this.vx = 10;
-	this.vy = 20;
+	this.vx = Math.random() * 40 - 20;
+	this.vy = Math.random() * 40 - 20;
 
 	this.draw = function() {
 		ctx.beginPath();
