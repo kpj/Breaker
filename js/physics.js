@@ -140,7 +140,7 @@ function simulate(world) {
 		world.ball.x += world.ball.vx * delta/200;
 		world.ball.y += world.ball.vy * delta/200;
 	}
-	if(world.ball.x < world.ball.radius < 0) {
+	if(world.ball.x - world.ball.radius < 0) {
 		world.ball.vx *= -1;
 
 		world.ball.x = prev_x;
