@@ -11,6 +11,8 @@ $(function () {
 	blockWidth = $('#world').width() / getMaxSubListLength(world.field);
 	blockHeight = 30;
 
+	world.paddle.y = $('#world').height() - blockHeight - 1;
+
 	// start game
 	window.setInterval(tick, 20);
 });

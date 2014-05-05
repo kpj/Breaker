@@ -52,8 +52,6 @@ var World = function() {
 	this.ball = new Ball();
 	this.paddle = new Paddle();
 
-	this.paddle.y = $('#world').height() - ($('#world').width() / getMaxSubListLength(this.field)); // TODO
-
 	this.removeBrick = function(x, y) {
 		me.field[y][x] = undefined;
 	};
