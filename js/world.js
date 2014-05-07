@@ -23,7 +23,7 @@ var Paddle = function() {
 
 	this.color = '#00ffff';
 
-	this.x = 0;
+	this.x = $('#world').width()/2;
 	this.y = -1;
 
 	this.move = function(d) {

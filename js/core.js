@@ -16,7 +16,7 @@ $(function () {
 		world.paddle.x + brickWidth/2,
 		world.paddle.y - brickHeight,
 		Math.random() * 80 - 40,
-		Math.random() * 60 + 20
+		Math.random() * 20 + 40
 	);
 
 	// start game
