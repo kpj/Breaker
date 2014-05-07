@@ -1,14 +1,14 @@
-var Ball = function() {
+var Ball = function(xPos, yPos, xVelo, yVelo) {
 	var me = this;
 
 	this.color = '#0000ff';
 	this.radius = 10;
 
-	this.x = 400;
-	this.y = 80;
+	this.x = xPos;
+	this.y = yPos;
 
-	this.vx = Math.random() * 40 - 20;
-	this.vy = Math.random() * 40 - 20;
+	this.vx = xVelo;
+	this.vy = yVelo;
 
 	this.draw = function() {
 		ctx.beginPath();
@@ -43,7 +43,7 @@ var World = function() {
 
 	this.backgroundColor = '#ffffff';
 
-	this.ball = new Ball();
+	this.balls = [];
 	this.paddle = new Paddle();
 
 	this.removeBrick = function(x, y) {

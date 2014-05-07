@@ -58,102 +58,112 @@ function findCollision(brick_x, brick_y, ball) {
 
 function simulate(world) {
 	var delta = Date.now() - lastTick;
+	var ballsToRemove = [];
 
-	var prev_x = world.ball.x;
-	var prev_y = world.ball.y;
+	for(var p in world.balls) {
+		var ball = world.balls[p];
 
-	var reset = false; // recompute ball position at end of this iteration
+		var prev_x = ball.x;
+		var prev_y = ball.y;
 
-	// move ball
-	world.ball.x += world.ball.vx * delta/200;
-	world.ball.y += world.ball.vy * delta/200;
+		var reset = false; // recompute ball position at end of this iteration
 
-	// find collisions with bricks
-	for(var r in world.field) {
-		var row = world.field[r];
+		// move ball
+		ball.x += ball.vx * delta/200;
+		ball.y += ball.vy * delta/200;
 
-		for(var c in row) {
-			var ele = row[c];
+		// find collisions with bricks
+		for(var r in world.field) {
+			var row = world.field[r];
 
-			if(ele) {
-				var res = findCollision(c * brickWidth, r * brickHeight, world.ball);
+			for(var c in row) {
+				var ele = row[c];
 
-				if(res != -1) {
-					ele.onCollision(c, r, res);
+				if(ele) {
+					var res = findCollision(c * brickWidth, r * brickHeight, ball);
 
-					switch(res) {
-						case 1:
-							world.ball.vy *= -1;
-							break;
-						case 2:
-							world.ball.vy *= -1;
-							break;
-						case 3:
-							world.ball.vx *= -1;
-							break;
-						case 4:
-							world.ball.vx *= -1;
-							break;
+					if(res != -1) {
+						ele.onCollision(c, r, res);
+
+						switch(res) {
+							case 1:
+								ball.vy *= -1;
+								break;
+							case 2:
+								ball.vy *= -1;
+								break;
+							case 3:
+								ball.vx *= -1;
+								break;
+							case 4:
+								ball.vx *= -1;
+								break;
+						}
 					}
 				}
 			}
+
+			reset = true;
 		}
 
-		reset = true;
-	}
+		// check paddle
+		var res = findCollision(world.paddle.x, world.paddle.y, ball);
+		if(res != -1) {
+			switch(res) {
+				case 1:
+					if(
+						(ball.vx > 0 && ball.x < world.paddle.x + brickWidth/2) ||
+						(ball.vx < 0 && ball.x > world.paddle.x + brickWidth/2)
+					)
+						ball.vx *= -1;
+					ball.vy *= -1;
+					break;
+				case 2:
+					ball.vy *= -1;
+					break;
+				case 3:
+					ball.vx *= -1;
+					break;
+				case 4:
+					ball.vx *= -1;
+					break;
+			}
 
-	// check paddle
-	var res = findCollision(world.paddle.x, world.paddle.y, world.ball);
-	if(res != -1) {
-		switch(res) {
-			case 1:
-				if(
-					(world.ball.vx > 0 && world.ball.x < world.paddle.x + brickWidth/2) ||
-					(world.ball.vx < 0 && world.ball.x > world.paddle.x + brickWidth/2)
-				)
-					world.ball.vx *= -1;
-				world.ball.vy *= -1;
-				break;
-			case 2:
-				world.ball.vy *= -1;
-				break;
-			case 3:
-				world.ball.vx *= -1;
-				break;
-			case 4:
-				world.ball.vx *= -1;
-				break;
+			reset = true;
 		}
 
-		reset = true;
-	}
-
-	// check world borders
-	if(world.ball.x + world.ball.radius > $('#world').width()) {
-		world.ball.vx *= -1;
-		reset = true;
-	}
-	if(world.ball.x - world.ball.radius < 0) {
-		world.ball.vx *= -1;
-		reset = true;
-	}
-	if(world.ball.y - world.ball.radius < 0) {
-		world.ball.vy *= -1;
-		reset = true;
-	}
-	if(world.ball.y + world.ball.radius > $('#world').height()) {
-		alert('noob');
-		world.ball.y = -10000000;
-		reset = false;
-	}
+		// check world borders
+		if(ball.x + ball.radius > $('#world').width()) {
+			ball.vx *= -1;
+			reset = true;
+		}
+		if(ball.x - ball.radius < 0) {
+			ball.vx *= -1;
+			reset = true;
+		}
+		if(ball.y - ball.radius < 0) {
+			ball.vy *= -1;
+			reset = true;
+		}
+		if(ball.y + ball.radius > $('#world').height()) {
+			ballsToRemove.push(p);
+			reset = false;
+		}
 
 
-	// reset old and do new movement (if needed)
-	if(reset) {
-		world.ball.x = prev_x;
-		world.ball.y = prev_y;
-		world.ball.x += world.ball.vx * delta/200;
-		world.ball.y += world.ball.vy * delta/200;
+		// reset old and do new movement (if needed)
+		if(reset) {
+			ball.x = prev_x;
+			ball.y = prev_y;
+			ball.x += ball.vx * delta/200;
+			ball.y += ball.vy * delta/200;
+		}
+	}
+
+	// remove balls
+	for(var p in ballsToRemove) {
+		var index = ballsToRemove[p];
+		world.balls.splice(index, 1);
 	}
 
 	lastTick = Date.now();

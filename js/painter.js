@@ -30,7 +30,9 @@ function drawWorld(world) {
 	drawBricks(world.field);
 
 	// draw ball
-	world.ball.draw();
+	for(var p in world.balls) {
+		world.balls[p].draw();
+	}
 
 	// draw paddle
 	world.paddle.draw();

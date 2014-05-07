@@ -12,12 +12,18 @@ $(function () {
 	world = new World();
 
 	setLevel([
-		[new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock()],
+		[new SimpleBlock(), new MultiBallBlock(), new MultiBallBlock(), new SimpleBlock(), new SimpleBlock()],
+		[new MultiBallBlock(), undefined, undefined, undefined, new MultiBallBlock()],
 		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
-		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
-		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
+		[new MultiBallBlock(), undefined, undefined, undefined, new MultiBallBlock()],
 		[new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock()]
 	]);
+	addBall(
+		world.paddle.x + brickWidth/2,
+		world.paddle.y - brickHeight,
+		Math.random() * 80 - 40,
+		Math.random() * 60 + 20
+	);
 
 	// start game
 	window.setInterval(tick, 20);
@@ -71,4 +77,8 @@ function setLevel(level) {
 	brickHeight = 30;
 
 	world.paddle.y = $('#world').height() - brickHeight - 1;
+}
+
+function addBall(x, y, vx, vy) {
+	world.balls.push(new Ball(x, y, vx, vy));
 }
