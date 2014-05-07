@@ -1,8 +1,8 @@
 var Ball = function(xPos, yPos, xVelo, yVelo) {
 	var me = this;
 
-	this.color = '#0000ff';
-	this.radius = 10;
+	this.color = '#000000';
+	this.radius = 4;
 
 	this.x = xPos;
 	this.y = yPos;
@@ -12,9 +12,9 @@ var Ball = function(xPos, yPos, xVelo, yVelo) {
 
 	this.draw = function() {
 		ctx.beginPath();
-		ctx.strokeStyle = this.color;
+		ctx.fillStyle = this.color;
 		ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
-		ctx.stroke();
+		ctx.fill();
 	};
 }
 
@@ -31,8 +31,8 @@ var Paddle = function() {
 	};
 
 	this.draw = function() {
-		ctx.strokeStyle = me.color;
-		ctx.strokeRect(me.x, me.y, brickWidth, brickHeight);
+		ctx.fillStyle = me.color;
+		ctx.fillRect(me.x, me.y, brickWidth, brickHeight);
 	}
 }
 

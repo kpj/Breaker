@@ -6,7 +6,10 @@ function drawBricks(field) {
 			var ele = row[c];
 
 			if(ele) {
-				ctx.strokeStyle = ele.color;
+				ctx.fillStyle = ele.color;
+				ctx.fillRect(c * brickWidth, r * brickHeight, brickWidth, brickHeight);
+
+				ctx.strokeStyle = '#ffffff';
 				ctx.strokeRect(c * brickWidth, r * brickHeight, brickWidth, brickHeight);
 			}
 		}
@@ -29,11 +32,11 @@ function drawWorld(world) {
 	// draw bricks
 	drawBricks(world.field);
 
+	// draw paddle
+	world.paddle.draw();
+
 	// draw ball
 	for(var p in world.balls) {
 		world.balls[p].draw();
 	}
-
-	// draw paddle
-	world.paddle.draw();
 }

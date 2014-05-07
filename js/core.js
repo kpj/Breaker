@@ -11,13 +11,7 @@ $(function () {
 	// create game world
 	world = new World();
 
-	setLevel([
-		[new SimpleBlock(), new MultiBallBlock(), new MultiBallBlock(), new SimpleBlock(), new SimpleBlock()],
-		[new MultiBallBlock(), undefined, undefined, undefined, new MultiBallBlock()],
-		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
-		[new MultiBallBlock(), undefined, undefined, undefined, new MultiBallBlock()],
-		[new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock()]
-	]);
+	setLevel(genLevel(20, 5));
 	addBall(
 		world.paddle.x + brickWidth/2,
 		world.paddle.y - brickHeight,
@@ -103,11 +97,25 @@ $(function () {
 /*
  * Administrative stuff
  */
+function genLevel(w, h) {
+	var level = [];
+
+	for(var y = 0 ; y < h ; y++) {
+		level.push([]);
+		for(var x = 0; x < w ; x++) {
+			level[y].push(
+				new window[randomElement(['SimpleBlock', 'MultiBallBlock'])]()
+			);
+		}
+	}
+
+	return level;
+}
 function setLevel(level) {
 	world.field = level;
 
 	brickWidth = $('#world').width() / getMaxSubListLength(world.field);
-	brickHeight = 30;
+	brickHeight = 20;
 
 	world.paddle.y = $('#world').height() - brickHeight - 1;
 }

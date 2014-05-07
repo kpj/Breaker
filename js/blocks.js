@@ -7,11 +7,11 @@ var SimpleBlock = function() {
 }
 
 var MultiBallBlock = function() {
-	this.color = '#0f0f0f';
+	this.color = '#00ff00';
 
 	this.onCollision = function(x, y, side) {
 		addBall(
-			x * brickWidth, y * brickHeight,
+			x * brickWidth + brickWidth/2, y * brickHeight + brickHeight/2,
 			Math.random() * 80 - 40,
 			Math.random() * 80 - 40
 		);
