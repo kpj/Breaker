@@ -83,15 +83,15 @@ $(function () {
 		paddle_movement.speed = Math.abs(diff)/10;
 	}
 
-	$('#world').on('touchstart', function(e) {
+	$(document).on('touchstart', function(e) {
 		e.preventDefault();
 		handleTouch(e.originalEvent.changedTouches[0]);
 	});
-	$('#world').on('touchmove', function(e) {
+	$(document).on('touchmove', function(e) {
 		e.preventDefault();
 		handleTouch(e.originalEvent.changedTouches[0]);
 	});
-	$('#world').on('touchend', function(e) {
+	$(document).on('touchend', function(e) {
 		e.preventDefault();
 
 		paddle_movement.speed = 7;
