@@ -7,7 +7,7 @@ function drawBricks(field) {
 
 			if(ele) {
 				ctx.strokeStyle = ele.color;
-				ctx.strokeRect(c * blockWidth, r * blockHeight, blockWidth, blockHeight);
+				ctx.strokeRect(c * brickWidth, r * brickHeight, brickWidth, brickHeight);
 			}
 		}
 	}

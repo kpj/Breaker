@@ -32,20 +32,14 @@ var Paddle = function() {
 
 	this.draw = function() {
 		ctx.strokeStyle = me.color;
-		ctx.strokeRect(me.x, me.y, blockWidth, blockHeight);
+		ctx.strokeRect(me.x, me.y, brickWidth, brickHeight);
 	}
 }
 
 var World = function() {
 	var me = this;
 
-	this.field = [
-		[new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock()],
-		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
-		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
-		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
-		[new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock()]
-	];
+	this.field = [];
 
 	this.backgroundColor = '#ffffff';
 

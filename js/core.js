@@ -1,3 +1,6 @@
+/*
+ * Initialize everything
+ */
 $(function () {
 	// do canvas stuff
 	ctx = $('#world')[0].getContext('2d');
@@ -8,46 +11,64 @@ $(function () {
 	// create game world
 	world = new World();
 
-	blockWidth = $('#world').width() / getMaxSubListLength(world.field);
-	blockHeight = 30;
-
-	world.paddle.y = $('#world').height() - blockHeight - 1;
+	setLevel([
+		[new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock()],
+		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
+		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
+		[new SimpleBlock(), undefined, undefined, undefined, new SimpleBlock()],
+		[new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock(), new SimpleBlock()]
+	]);
 
 	// start game
 	window.setInterval(tick, 20);
 });
 
+/*
+ * Heart beat of our world
+ */
 function tick() {
 	simulate(world);
+
 	ctx.clearRect(0, 0, $('#content').width(), $('#content').height());
 	drawWorld(world);
 
-	// move paddle
-	if(move_left) {
-		world.paddle.move(-5);
-	}
-	if(move_right) {
-		world.paddle.move(5);
-	}
+	handleControls(paddle_movement);
 }
 
-var move_left = false;
-var move_right = false;
+/*
+ * Handle controller
+ */
+var paddle_movement = {
+	left: false,
+	right: false
+}
 $(document).keydown(function(e) {
 	if(e.keyCode == 65) {
 		// [A]
-		move_left = true;
+		paddle_movement.left = true;
 	} else if(e.keyCode == 68) {
 		// [D]
-		move_right = true;
+		paddle_movement.right = true;
 	}
 });
 $(document).keyup(function(e) {
 	if(e.keyCode == 65) {
 		// [A]
-		move_left = false;
+		paddle_movement.left = false;
 	} else if(e.keyCode == 68) {
 		// [D]
-		move_right = false;
+		paddle_movement.right = false;
 	}
 });
+
+/*
+ * Administrative stuff
+ */
+function setLevel(level) {
+	world.field = level;
+
+	brickWidth = $('#world').width() / getMaxSubListLength(world.field);
+	brickHeight = 30;
+
+	world.paddle.y = $('#world').height() - brickHeight - 1;
+}
