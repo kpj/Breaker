@@ -1,6 +1,6 @@
-function handleControls(dir) {
-	if(dir.left)
-		world.paddle.move(-7);
-	if(dir.right)
-		world.paddle.move(7);
+function handleControls(pm) {
+	if(pm.left)
+		world.paddle.move(-pm.speed);
+	if(pm.right)
+		world.paddle.move(pm.speed);
 }

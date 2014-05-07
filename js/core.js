@@ -44,27 +44,60 @@ function tick() {
 /*
  * Handle controller
  */
-var paddle_movement = {
-	left: false,
-	right: false
-}
-$(document).keydown(function(e) {
-	if(e.keyCode == 65) {
-		// [A]
-		paddle_movement.left = true;
-	} else if(e.keyCode == 68) {
-		// [D]
-		paddle_movement.right = true;
+$(function () {
+	paddle_movement = {
+		left: false,
+		right: false,
+		speed: 7
 	}
-});
-$(document).keyup(function(e) {
-	if(e.keyCode == 65) {
-		// [A]
+
+	$(document).keydown(function(e) {
+		if(e.keyCode == 65) {
+			// [A]
+			paddle_movement.left = true;
+		} else if(e.keyCode == 68) {
+			// [D]
+			paddle_movement.right = true;
+		}
+
+		paddle_movement.speed = 7;
+	});
+	$(document).keyup(function(e) {
+		if(e.keyCode == 65) {
+			// [A]
+			paddle_movement.left = false;
+		} else if(e.keyCode == 68) {
+			// [D]
+			paddle_movement.right = false;
+		}
+
+		paddle_movement.speed = 7;
+	});
+
+	function handleTouch(touch) {
+		var middle = $('#world').position().left + $('#world').width()/2;
+		var diff = middle - touch.pageX;
+
+		paddle_movement[(diff > 0) ? 'left' : 'right'] = true;
+		paddle_movement[(diff < 0) ? 'left' : 'right'] = false;
+		paddle_movement.speed = Math.abs(diff)/10;
+	}
+
+	$('#world').on('touchstart', function(e) {
+		e.preventDefault();
+		handleTouch(e.originalEvent.changedTouches[0]);
+	});
+	$('#world').on('touchmove', function(e) {
+		e.preventDefault();
+		handleTouch(e.originalEvent.changedTouches[0]);
+	});
+	$('#world').on('touchend', function(e) {
+		e.preventDefault();
+
+		paddle_movement.speed = 7;
 		paddle_movement.left = false;
-	} else if(e.keyCode == 68) {
-		// [D]
 		paddle_movement.right = false;
-	}
+	});
 });
 
 /*
