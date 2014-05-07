@@ -135,18 +135,25 @@ function simulate(world) {
 		// check world borders
 		if(ball.x + ball.radius > $('#world').width()) {
 			ball.vx *= -1;
-			reset = true;
+			ball.x = $('#world').width() - ball.radius - 1;
+
+			reset = false;
 		}
 		if(ball.x - ball.radius < 0) {
 			ball.vx *= -1;
-			reset = true;
+			ball.x = ball.radius + 1;
+
+			reset = false;
 		}
 		if(ball.y - ball.radius < 0) {
 			ball.vy *= -1;
-			reset = true;
+			ball.y = ball.radius + 1;
+
+			reset = false;
 		}
 		if(ball.y + ball.radius > $('#world').height()) {
 			ballsToRemove.push(p);
+
 			reset = false;
 		}
 
